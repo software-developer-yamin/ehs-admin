@@ -1,0 +1,10 @@
+.app{
+    display: flex;
+    flex-direction:column;
+}
+
+.main__content{
+    margin-left:15vw;
+    margin-top:10vh;
+    overflow-x:hidden;
+}

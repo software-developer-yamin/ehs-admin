@@ -1,0 +1,76 @@
+.languages__main__body {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .languages__table {
+    width: 90%;
+    margin: 30px auto;
+    border: 1px solid #9a999f;
+    border-radius: 5px;
+
+  }
+  
+  .languages__table__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #9a999f;
+    padding: 10px 20px 10px 20px; 
+  }
+  
+  .languages__table__header__text {
+    color: #13375B;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0.20000000298023224px;
+  }
+  .languages__page__add__language__btn {
+    width: 195px;
+    height: 40px;
+    background: #f2994a;
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 22px;
+    border: none;
+    color: #ffffff;
+    transition: 0.1s;
+  }
+  
+  .languages__page__add__language__btn:hover,
+  .languages__page__edit__language__btn:hover{
+    cursor: pointer;
+    transform : scale(1.05);
+  }
+
+  .languages__page__edit__language__btn {
+    background: #ffffff;
+    border: 1px solid #f2994a;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-family: "Lato", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #f2994a;
+    transition: 0.1s;
+  }
+
+
+.add__language__inputs,
+.edit__language__inputs {
+  padding: 10px 0 10px 0;
+  display: flex;
+}
+
+.add__language__inputs label,
+.edit__language__inputs label {
+  width: 45%;
+}

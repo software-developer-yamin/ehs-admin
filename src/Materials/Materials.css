@@ -1,0 +1,85 @@
+.materials__main__body {
+  width: 100%;
+  text-align: center;
+}
+
+.materials__table,
+.dimensions__table {
+  width: 90%;
+  margin: 30px auto;
+  border: 1px solid #9a999f;
+  border-radius: 5px;
+}
+
+.materials__table__header,
+.dimensions__table__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #9a999f;
+  padding: 10px 20px 10px 20px;
+}
+
+.materials__table__header__text,
+.dimensions__table__header__text {
+  color: #13375b;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.20000000298023224px;
+}
+.materials__page__add__material__btn,
+.materials__page__add__dimensions__btn {
+  width: 195px;
+  height: 40px;
+  background: #f2994a;
+  border-radius: 5px;
+  font-family: "Lato", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  border: none;
+  color: #ffffff;
+  transition: 0.1s;
+}
+
+.materials__page__add__material__btn:hover,
+.materials__page__add__dimensions__btn:hover,
+.materials__page__edit__material__btn:hover,
+.materials__page__edit__dimension__btn:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.materials__page__edit__material__btn,
+.materials__page__edit__dimension__btn {
+  background: #ffffff;
+  border: 1px solid #f2994a;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: "Lato", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #f2994a;
+  transition: 0.1s;
+}
+
+.add__material__inputs,
+.edit__material__inputs,
+.add__dimension__inputs,
+.edit__dimension__inputs {
+  padding: 10px 0 10px 0;
+  display: flex;
+}
+
+.add__material__inputs label,
+.edit__material__inputs label,
+.add__dimension__inputs label,
+.edit__dimension__inputs label {
+  width: 45%;
+}

@@ -1,0 +1,41 @@
+.navbar {
+  overflow: hidden;
+  display: flex;
+  height: 10vh;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #13375b;
+  position: fixed;
+  z-index: 1;
+}
+
+.navbar__logo {
+  margin-left: 30px;
+  width: 85%;
+  display: flex;
+}
+
+.admin__text {
+  color: white;
+  padding-top: 15px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 14px;
+  letter-spacing: 0.20000000298023224px;
+  text-align: left;
+}
+
+.navbar__icons {
+  width: 15%;
+  color: white;
+  display: flex;
+  justify-content:space-evenly
+}
+
+.MuiPaper-elevation8{
+  height:240px;
+  width:400px;
+}

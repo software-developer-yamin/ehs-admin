@@ -1,0 +1,71 @@
+.products__settings__options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.orders__settings__options p {
+  font-family: "Source Sans Pro", sans-serif;
+  margin-left: 90px;
+  width: 40px;
+  padding: 3px 15px 5px 15px;
+  border: 1px solid #9a999f;
+  border-radius: 50px;
+}
+
+.products__settings__options p {
+  font-family: "Source Sans Pro", sans-serif;
+  padding: 3px 15px 5px 15px;
+  border: 1px solid #9a999f;
+  border-radius: 50px;
+}
+
+.products__settings__title p,
+.orders__settings__title p,
+.contact__details__title__text {
+  margin-left: 50px;
+  color: #13375b;
+  font-family: "Source Sans Pro", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 14px;
+}
+
+.contact__details__title {
+  display: flex;
+  align-items: center;
+}
+
+.edit__contact__details__btn {
+  font-family: "Source Sans Pro", sans-serif;
+  margin-left: 90px;
+  width: 30px;
+  padding: 3px 15px 5px 15px;
+  border: 1px solid #9a999f;
+  border-radius: 50px;
+}
+
+.contact__details__text {
+  margin-left: 50px;
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 30px;
+  letter-spacing: 0.2px;
+  color: #757575;
+}
+
+.edit__contact__details__btn:hover{
+  cursor:pointer
+}
+
+.edit__details__inputs
+{
+ padding: 10px 0 10px 0;
+ display: flex;
+}
+
+.edit__details__inputs label {
+ width: 60%;
+}

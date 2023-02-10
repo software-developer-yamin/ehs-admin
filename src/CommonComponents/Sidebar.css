@@ -1,0 +1,37 @@
+.sidebar{
+    top:10vh;
+    width: 15vw;
+    min-height:90vh;
+    background-color: #13375B;
+    position:fixed;
+}
+
+.add__product__button{
+    margin-top:50px;
+    margin-left: 10px;
+    font-family: Lato;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+    color: #13375B;
+    height: 40px;
+    width: 204px;
+    border-radius: 5px;
+    background: #FFFFFF;
+    border:none;
+}
+
+.sidebar__text{
+    margin-left: 40px;
+    margin-top: 40px;
+    height: 19px;
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+}
+

@@ -1,0 +1,92 @@
+.promos__page__main__body {
+  width: 100%;
+  text-align: center;
+}
+
+.promos__page__table {
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid #9a999f;
+  border-radius: 5px;
+}
+
+.promos__page__table__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #9a999f;
+  padding: 10px 20px 10px 20px; 
+}
+
+.promos__page__table__header__text {
+  color: #13375B;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.20000000298023224px;
+}
+.add__promo__btn {
+  width: 195px;
+  height: 40px;
+  background: #f2994a;
+  border-radius: 5px;
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  border: none;
+  color: #ffffff;
+  transition: 0.1s;
+}
+
+.add__promo__btn:hover{
+  cursor: pointer;
+  transform : scale(1.05);
+}
+
+.add__promo__inputs,.edit__promo__inputs {
+  display:flex;
+  padding: 10px 0 10px 0;
+}
+
+.add__promo__inputs label,.edit__promo__inputs label{
+  width:45%;
+}
+
+.coupon__img__upload {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
+
+.image__preview {
+  text-align: center;
+  padding-bottom:10px;
+}
+
+.thumbnail {
+  margin: auto;
+}
+
+.coupon__img__upload__label {
+  border: 1px solid #f2994a;
+  border-radius: 5px;
+  padding: 3px;
+  background:#ffffff;
+  border-radius: 5px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  color: #f2994a;
+}
+
+.coupon__img__upload__label:hover {
+    cursor:pointer;
+    transform: scale(1.05);
+}
