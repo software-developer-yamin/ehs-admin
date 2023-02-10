@@ -27,7 +27,7 @@ function EditProduct() {
   const [tagsEdit, setTagsEdit] = useState([]);
   const [sku, setSku] = useState();
   const [originalOneDriveLink, setOriginalOneDriveLink] = useState();
-  const [originalPrice,setOriginalPrice] = useState();
+  const [originalPrice, setOriginalPrice] = useState();
   const [stocks, setStocks] = useState();
   const [languageEdit, setLanguageEdit] = useState();
   const [imgUrl, setImgUrl] = useState([]);
@@ -46,9 +46,14 @@ function EditProduct() {
   const [productUpdatedSnackbarOpen, setProductUpdatedSnackbarOpen] =
     useState(false);
   const [materialUpdatedSnackbarOpen, setMaterialUpdatedSnackbarOpen] =
-    useState(false);  
+    useState(false);
   const [materialCreatedSnackbarOpen, setMaterialCreatedSnackbarOpen] =
-    useState(false);  
+    useState(false);
+  const [moqStringValue, setMoqStringValue] = useState("");
+  const [cndObj, setCndObj] = useState({
+    cndValue: "",
+    cndConnecter: "",
+  });
 
   // getting product details
   const getProductDetails = async () => {
@@ -237,8 +242,9 @@ function EditProduct() {
   const getTagsString = (e) => {
     let tagsString = e.target.value;
 
-    if (tagsString.indexOf(',') > -1) { setTagsEdit(tagsString.split(',')) }
-     
+    if (tagsString.indexOf(",") > -1) {
+      setTagsEdit(tagsString.split(","));
+    }
   };
 
   // uploading the images
@@ -275,18 +281,18 @@ function EditProduct() {
       price: price,
     };
     await axios.post(`${API}/material/updateMaterial`, materialDetailsUpd);
-    setMaterialUpdatedSnackbarOpen(true)
+    setMaterialUpdatedSnackbarOpen(true);
     getProductDetails();
   };
 
-  //delete material 
-  const removeMaterial = async(e,mt) => {
+  //delete material
+  const removeMaterial = async (e, mt) => {
     e.preventDefault();
     console.log(mt._id);
 
     var toRemove = mt._id;
     var index = materialDimensionEdit.indexOf(toRemove);
-    setMaterialDimensionEdit(materialDimensionEdit.splice(index,1));
+    setMaterialDimensionEdit(materialDimensionEdit.splice(index, 1));
 
     let updproductDetails = {
       poster_obj_id: productId,
@@ -306,15 +312,14 @@ function EditProduct() {
       discount_type: discountTypeEdit,
       discountValue: discountValue,
       operationType: 3,
-    }; 
+    };
 
     await axios
-    .post(`${API}/posters/updatePoster`, updproductDetails)
-    .then((response) => console.log(response));
+      .post(`${API}/posters/updatePoster`, updproductDetails)
+      .then((response) => console.log(response));
 
-  getProductDetails();
-  }
-
+    getProductDetails();
+  };
 
   //add new material
   const addMaterial = async (e) => {
@@ -334,9 +339,8 @@ function EditProduct() {
       ...materialDimensionEdit,
       materialData.data.data._id,
     ]);
-    console.log(materialDimensionEdit)
+    console.log(materialDimensionEdit);
     setMaterialCreatedSnackbarOpen(true);
-
   };
 
   // adding new material field
@@ -350,9 +354,27 @@ function EditProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(category, subCategory, author, imgUrl,tagsEdit);
-    let updproductDetails ={}
-      updproductDetails = {
+    console.log(
+      category,
+      subCategory,
+      author,
+      imgUrl,
+      tagsEdit,
+      moqStringValue
+    );
+    let moqArrayValue = [];
+    if (moqStringValue) {
+      let arr = moqStringValue?.split(" | ");
+      const res = [];
+      for (let i = 0; i < arr.length; i++) {
+        const chunk = arr[i].split(", ");
+        res.push(chunk);
+      }
+      moqArrayValue = res;
+    }
+
+    let updproductDetails = {};
+    updproductDetails = {
       poster_obj_id: productId,
       name: name,
       category: category,
@@ -366,16 +388,19 @@ function EditProduct() {
       bestSeller: bestSellerEdit,
       materialDimension: materialDimensionEdit,
       orginal_one_drive_link: originalOneDriveLink,
-      originalPrice:originalPrice,
+      originalPrice: originalPrice,
       authors: author,
       discount_type: discountTypeEdit,
       discountValue: discountValue,
+      MOQ: moqArrayValue,
       operationType: 3,
-    
+      cnd: cndObj.cndValue,
+      cndConnecter: cndObj.cndConnecter,
     };
-    if(editLanCon != ""){
-      console.log(editLanCon)
-     updproductDetails.languageConnecter = editLanCon
+
+    if (editLanCon != "") {
+      console.log(editLanCon);
+      updproductDetails.languageConnecter = editLanCon;
     }
 
     console.log(updproductDetails, "yesssss");
@@ -403,9 +428,9 @@ function EditProduct() {
   };
 
   useEffect(() => {
-console.log(editLanCon)
-  }, [editLanCon])
-  
+    console.log(editLanCon);
+  }, [editLanCon]);
+
   return (
     <div className="add__product__body">
       <div className="add__product__header">
@@ -454,8 +479,7 @@ console.log(editLanCon)
         </MuiAlert>
       </Snackbar>
 
-
-      <form  onSubmit={handleSubmit} enctype="multipart/form-data">
+      <form onSubmit={handleSubmit} enctype="multipart/form-data">
         <div className="add__product__main__body">
           <div className="add__product__body__left">
             <div className="product__info__form">
@@ -770,22 +794,22 @@ console.log(editLanCon)
                       </div>
                     </div>
 
-                   <div className="material__info__form__category">
-                   <button
-                      className="edit__material__btn"
-                      value={i}
-                      onClick={(e) => updateMaterial(e, mt)}
-                    >
-                      Update Material
-                    </button>
-                    <button
-                      className="remove__material__btn"
-                      value={i}
-                      onClick={(e) => removeMaterial(e, mt)}
-                    >
-                      Remove Material
-                    </button>
-                   </div>  
+                    <div className="material__info__form__category">
+                      <button
+                        className="edit__material__btn"
+                        value={i}
+                        onClick={(e) => updateMaterial(e, mt)}
+                      >
+                        Update Material
+                      </button>
+                      <button
+                        className="remove__material__btn"
+                        value={i}
+                        onClick={(e) => removeMaterial(e, mt)}
+                      >
+                        Remove Material
+                      </button>
+                    </div>
                   </div>
                 ))}
 
@@ -926,9 +950,69 @@ console.log(editLanCon)
                     <div>
                       <label for="poster">LanguageConnector:</label>
                       <br />
-                      <input id="poster" type="text" value={editLanCon?editLanCon:""} onChange={(e)=>{
-                        seteditLanCon(e.target.value)
-                      }} />
+                      <input
+                        id="poster"
+                        type="text"
+                        value={editLanCon ? editLanCon : ""}
+                        onChange={(e) => {
+                          seteditLanCon(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="connected__posters__info__form">
+              <div className="connected__posters__info__form__body">
+                <p className="connected__posters__info__form__title">
+                  Connected Posters By CND
+                </p>
+                <div className="connected__posters__info__form__inputs">
+                  <div className="connected__posters__info__form__category">
+                    <div>
+                      <label for="cnd">CND:</label>
+                      <br />
+                      <input
+                        id="cnd"
+                        type="text"
+                        value={cndObj.cndValue}
+                        onChange={(e) =>
+                          setCndObj({ ...cndObj, cndValue: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <label for="cndConnector">CND Connector:</label>
+                      <br />
+                      <input
+                        id="cndConnector"
+                        type="text"
+                        value={cndObj.cndConnecter}
+                        onChange={(e) =>
+                          setCndObj({ ...cndObj, cndConnecter: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="connected__posters__info__form">
+              <div className="connected__posters__info__form__body">
+                <div className="connected__posters__info__form__inputs">
+                  <div className="connected__posters__info__form__category">
+                    <div>
+                      <label for="moq">MOQ:</label>
+                      <br />
+                      <input
+                        id="moq"
+                        type="text"
+                        value={moqStringValue}
+                        onChange={(e) => setMoqStringValue(e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
