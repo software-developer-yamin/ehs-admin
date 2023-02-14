@@ -23,7 +23,7 @@ const SpreadSheet = () => {
     let wrong = [];
     setL(true);
 
-    for (let i = 0; i < data.length && data[i].length > 1; i++) {
+    for (let i = 0; i < data?.length && data[i]?.length > 1; i++) {
       console.log(data[i]);
       let insertObj = {};
       insertObj.name = data[i][1];
@@ -43,7 +43,7 @@ const SpreadSheet = () => {
       // console.log(material)
       let matId = [];
       // console.log(material)
-      for (let m = 0; m < material.length; m++) {
+      for (let m = 0; m < material?.length; m++) {
         // get Materoal
         let response = await fetch(
           `${API}/material/getSingleMaterial?material_title=${
@@ -61,7 +61,7 @@ const SpreadSheet = () => {
         // console.log(response)
 
         if (response.status === 200) {
-          if (response.data.length > 0) {
+          if (response.data?.length > 0) {
             if (!matId.includes(response.data[0]._id))
               matId.push(response.data[0]._id);
           }
@@ -76,7 +76,7 @@ const SpreadSheet = () => {
       // ==================C=========================
       let category = data[i][2]?.split(", ");
       let catId = [];
-      for (let c = 0; c < category.length; c++) {
+      for (let c = 0; c < category?.length; c++) {
         // get cat
         let response = await fetch(
           `${API}/category/getSingleCategory?title=${category[c]}`,
@@ -107,7 +107,7 @@ const SpreadSheet = () => {
       let subCategory = data[i][3]?.split(", ");
       // console.log(subCategory)
       let sbcatId = [];
-      for (let sb = 0; sb < subCategory.length; sb++) {
+      for (let sb = 0; sb < subCategory?.length; sb++) {
         console.log(subCategory[sb]);
 
         // get Materoal
@@ -177,7 +177,7 @@ const SpreadSheet = () => {
       let Author = data[i][4]?.split(", ");
       // console.log(subCategory)
       let authId = [];
-      for (let au = 0; au < Author.length; au++) {
+      for (let au = 0; au < Author?.length; au++) {
         // console.log(subCategory[sb])
 
         // get Materoal
@@ -195,7 +195,7 @@ const SpreadSheet = () => {
         // console.log(response)
         // console.log(response)
         if (response.status === 200) {
-          if (response.data.length > 0) {
+          if (response?.data?.length > 0) {
             authId.push(response.data[0]._id);
           }
         }
@@ -238,7 +238,7 @@ const SpreadSheet = () => {
       if (data[i][38] !== undefined) {
         let arr = data[i][38]?.split(" | ");
         const res = [];
-        for (let i = 0; i < arr.length; i++) {
+        for (let i = 0; i < arr?.length; i++) {
           const chunk = arr[i]?.split(", ");
           res.push(chunk);
         }
