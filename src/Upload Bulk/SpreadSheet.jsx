@@ -33,9 +33,9 @@ const SpreadSheet = () => {
       // console.log(b)
       let material = [];
       for (let i = 0; i < b?.length; i++) {
-        if (b[i].includes("_")) {
+        if (b[i]?.includes("_")) {
           // console.log(b[i])
-          material.push(b[i].split(", ")[0]);
+          material.push(b[i]?.split(", ")[0]);
           // console.log(material)
         }
       }
@@ -47,8 +47,8 @@ const SpreadSheet = () => {
         // get Materoal
         let response = await fetch(
           `${API}/material/getSingleMaterial?material_title=${
-            material[m].split("_ ")[0]
-          }&dimension_title=${material[m].split("_ ")[1]}`,
+            material[m]?.split("_ ")[0]
+          }&dimension_title=${material[m]?.split("_ ")[1]}`,
           {
             method: "GET",
 
@@ -74,7 +74,7 @@ const SpreadSheet = () => {
       // =====================M==============
 
       // ==================C=========================
-      let category = data[i][2].split(", ");
+      let category = data[i][2]?.split(", ");
       let catId = [];
       for (let c = 0; c < category.length; c++) {
         // get cat
@@ -104,7 +104,7 @@ const SpreadSheet = () => {
       // ==================C=========================
 
       // =================sbc=================================
-      let subCategory = data[i][3].split(", ");
+      let subCategory = data[i][3]?.split(", ");
       // console.log(subCategory)
       let sbcatId = [];
       for (let sb = 0; sb < subCategory.length; sb++) {
@@ -162,19 +162,19 @@ const SpreadSheet = () => {
       // =================tag=====================
       let tags = [];
       if (data[i][11] != undefined) {
-        tags = data[i][11].split(", ");
+        tags = data[i][11]?.split(", ");
       }
       insertObj.tags = tags;
       // =================tag=====================
       let img = [];
       if (data[i][15] != undefined) {
-        img = data[i][15].split(", ");
+        img = data[i][15]?.split(", ");
       }
 
       insertObj.imgUrl = img;
 
       // +++++++++++++++++++++++++Author================
-      let Author = data[i][4].split(", ");
+      let Author = data[i][4]?.split(", ");
       // console.log(subCategory)
       let authId = [];
       for (let au = 0; au < Author.length; au++) {
@@ -236,10 +236,10 @@ const SpreadSheet = () => {
       // =================tag=====================
       let moq = [];
       if (data[i][38] !== undefined) {
-        let arr = data[i][38].split(" | ");
+        let arr = data[i][38]?.split(" | ");
         const res = [];
         for (let i = 0; i < arr.length; i++) {
-          const chunk = arr[i].split(", ");
+          const chunk = arr[i]?.split(", ");
           res.push(chunk);
         }
         moq = res;
