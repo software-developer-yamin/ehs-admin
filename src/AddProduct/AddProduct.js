@@ -13,7 +13,7 @@ function AddProduct() {
   const [catOptions, setCatOptions] = useState([]);
   const [subCatOptions, setSubCatOptions] = useState([]);
   const [authorsOptions, setAuthorsOptions] = useState([]);
-  const [materialDimensionOptions, setMaterialDimensionOptions] =useState([]);
+  const [materialDimensionOptions, setMaterialDimensionOptions] = useState([]);
   const [name, setName] = useState();
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
@@ -22,7 +22,7 @@ function AddProduct() {
   const [tags, setTags] = useState([]);
   const [sku, setSku] = useState();
   const [originalOneDriveLink, setOriginalOneDriveLink] = useState();
-  const [originalPrice,setOriginalPrice] = useState();
+  const [originalPrice, setOriginalPrice] = useState();
   const [stocks, setStocks] = useState();
   const [language, setLanguage] = useState(1);
   const [imgUrl, setImgUrl] = useState([]);
@@ -63,18 +63,33 @@ function AddProduct() {
       });
   };
 
+  useEffect(() => {
+    setSubCategoryOptions();
+  }, [category])
+
   //set option for sub-category
   const setSubCategoryOptions = async () => {
     await axios
       .get(`${API}/subCategory/getSubCategory`)
       .then((response) => {
+        // console.log("Response ===> " , response);
         let subCategories = [];
         for (var i = 0; i < response.data.data.length; i++) {
-          let item = {
-            name: response.data.data[i].title,
-            id: response.data.data[i]._id,
-          };
-          subCategories.push(item);
+          if (category[0]) {
+            if (category[0] == String(response.data.data[i].categoryId)) {
+              let item = {
+                name: response.data.data[i].title,
+                id: response.data.data[i]._id,
+              };
+              subCategories.push(item);
+            }
+          } else {
+            let item = {
+              name: response.data.data[i].title,
+              id: response.data.data[i]._id,
+            };
+            subCategories.push(item);
+          }
         }
         setSubCatOptions(subCategories);
       })
@@ -83,7 +98,7 @@ function AddProduct() {
       });
   };
 
-  const setMaterialDimensions= async ()=>{
+  const setMaterialDimensions = async () => {
     await axios
       .get(`${API}/material/getMaterial`)
       .then((response) => {
@@ -91,7 +106,7 @@ function AddProduct() {
         let authors = [];
         for (var i = 0; i < response.data.data.length; i++) {
           let item = {
-            name:response.data.data[i].material_title+" - "+ response.data.data[i].dimension_title            ,
+            name: response.data.data[i].material_title + " - " + response.data.data[i].dimension_title,
             id: response.data.data[i]._id,
           };
           authors.push(item);
@@ -107,7 +122,7 @@ function AddProduct() {
     await axios
       .get(`${API}/author/getAuthor`)
       .then((response) => {
-        console.log("author respondr "+response.data)
+        console.log("author respondr " + response.data)
         let authors = [];
         for (var i = 0; i < response.data.data.length; i++) {
           let item = {
@@ -124,7 +139,7 @@ function AddProduct() {
   };
 
   //use effect calls
-  useEffect( () => {
+  useEffect(() => {
     setCategoryOptions();
     setSubCategoryOptions();
     setAuthorOptions();
@@ -163,7 +178,7 @@ function AddProduct() {
     }
     setAuthor(authors);
   };
-  const pushMaterialDimension =(materialSelected)=>{
+  const pushMaterialDimension = (materialSelected) => {
     console.log(materialSelected);
     let material = [];
     for (var i = 0; i < materialSelected.length; i++) {
@@ -175,12 +190,12 @@ function AddProduct() {
 
   //getting description
   const getDescription = (e) => {
-    let detailsString=e.target.value;
+    let detailsString = e.target.value;
     //console.log(detailsString);
 
     let temp = detailsString.split("\n");
     console.log(temp);
-    
+
     let final = temp.join("|");
 
     setDescription(final);
@@ -189,9 +204,9 @@ function AddProduct() {
   // getting tags as strings
   const getTagsString = (e) => {
     let tagsString = e.target.value;
-    
+
     if (tagsString.indexOf(',') > -1) { setTags(tagsString.split(',')) }
-     
+
   };
 
   //uploading product images
@@ -202,10 +217,10 @@ function AddProduct() {
 
     await axios
       .post(`${API}/posters/uploadFile`, formData)
-      .then((response) =>{
-      console.log(response);
+      .then((response) => {
+        console.log(response);
         setImgUrl([...imgUrl, response.data.data.fileSavedUrl])
-  });
+      });
     console.log(imgUrl);
   };
 
@@ -573,7 +588,7 @@ function AddProduct() {
                     </button> */}
                   </div>
                 ))}
-                
+
               </div>
             </div>
             <div className="discount__info__form">
