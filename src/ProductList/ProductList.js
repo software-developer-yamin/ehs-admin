@@ -16,15 +16,20 @@ import "./ProductList.css";
 function ProductList() {
   const [productDetails, setProductDetails] = useState([]);
   const [catOptions, setCatOptions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [subCatOptions, setSubCatOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(20);
   const [noOfPage, setNoOfPage] = useState(1);
   const [page, setPage] = useState(1);
-  const [productCount,setProductCount] = useState(0);
+  const [productCount, setProductCount] = useState(0);
   const [productDeletedSnackbarOpen, setProductDeletedSnackbarOpen] =
     useState(false);
+
+  useEffect(() => {
+    getSubcategoryOptions();
+  }, [selectedCategory])
 
   const getProductDetails = async () => {
     await axios
@@ -56,7 +61,19 @@ function ProductList() {
     await axios
       .get(`${API}/subCategory/getSubCategory`)
       .then((response) => {
-        setSubCatOptions(response.data.data);
+        console.log("response from product list ====> ", response)
+        if (selectedCategory != '') {
+          let subCat = [] ; 
+          for (let i = 0 ; i < response.data.data.length;i++){
+            if (String(response.data.data[i].categoryId) == selectedCategory){
+              subCat.push(response.data.data[i])
+            }
+          }
+          console.log("subCat ===> ", subCat)
+          setSubCatOptions(subCat);
+        }else{
+          setSubCatOptions(response.data.data);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -70,8 +87,7 @@ function ProductList() {
   }, [skip]);
 
   const filterByCat = async (e) => {
-    console.log(e.target.value);
-    const catSlug = e.target.value;
+    const catSlug = e != "" ? e.target.value?.split(",")[0]:"posters";
     await axios
       .get(`${API}/posters/getPosterByCatSubCat`, {
         params: { category_slug: catSlug, skip: skip, limit: limit },
@@ -156,12 +172,13 @@ function ProductList() {
               name="category"
               id="category"
               onChange={(e) => {
-                filterByCat(e);
+                filterByCat(e.target.value != "" ? e : "");
+                setSelectedCategory(e.target.value != "" ? e.target.value?.split(",")[1] : "");
               }}
             >
               <option value="">Select a Category</option>
               {catOptions?.map((cat, i) => (
-                <option key={i} value={cat.cat_slug}>
+                <option key={i} value={cat.cat_slug+","+cat._id}>
                   {cat.title}
                 </option>
               ))}
