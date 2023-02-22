@@ -16,7 +16,8 @@ import "./ProductList.css";
 function ProductList() {
   const [productDetails, setProductDetails] = useState([]);
   const [catOptions, setCatOptions] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubCategory, setSelectedSubCategory]= useState("");
   const [subCatOptions, setSubCatOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [skip, setSkip] = useState(0);
@@ -31,10 +32,20 @@ function ProductList() {
     getSubcategoryOptions();
   }, [selectedCategory])
 
+  useEffect(() => {
+    setSkip(0)
+    setPage(1)
+  },[selectedSubCategory , selectedCategory])
+
   const getProductDetails = async () => {
+    console.log("skip " + skip );
+    console.log("selectedCategory ===> ", selectedCategory)
+    console.log("selectedSubCategory ====> ", selectedSubCategory)
     await axios
-      .get(`${API}/posters/getPoster`, { params: { skip: skip, limit: limit } })
+      .get(`${API}/posters/getPoster`, { params: { skip: skip, limit: limit, categoryId : selectedCategory, subCatId : selectedSubCategory} })
       .then((response) => {
+        console.log("response ====> ", response)
+        
         setProductCount(response.data.data.count );
         setNoOfPage(Math.ceil(response.data.data.count / limit));
         setProductDetails(response.data.data.postersExists);
@@ -61,7 +72,7 @@ function ProductList() {
     await axios
       .get(`${API}/subCategory/getSubCategory`)
       .then((response) => {
-        console.log("response from product list ====> ", response)
+        // console.log("response from product list ====> ", response)
         if (selectedCategory != '') {
           let subCat = [] ; 
           for (let i = 0 ; i < response.data.data.length;i++){
@@ -69,7 +80,7 @@ function ProductList() {
               subCat.push(response.data.data[i])
             }
           }
-          console.log("subCat ===> ", subCat)
+          // console.log("subCat ===> ", subCat)
           setSubCatOptions(subCat);
         }else{
           setSubCatOptions(response.data.data);
@@ -86,6 +97,8 @@ function ProductList() {
     getSubcategoryOptions();
   }, [skip]);
 
+  // console.log(subCatOptions)
+
   const filterByCat = async (e) => {
     const catSlug = e != "" ? e.target.value?.split(",")[0]:"posters";
     await axios
@@ -100,8 +113,7 @@ function ProductList() {
   };
 
   const filterBySubCat = async (e) => {
-    console.log(e.target.value);
-    const subCatSlug = e.target.value;
+    const subCatSlug = e != "" ? e.target.value?.split(",")[0]:"";
     await axios
       .get(`${API}/posters/getPosterByCatSubCat`, {
         params: { subCategorySlug: subCatSlug, skip: skip, limit: limit },
@@ -188,12 +200,13 @@ function ProductList() {
               name="sub-category"
               id="sub-category"
               onChange={(e) => {
-                filterBySubCat(e);
+                filterBySubCat(e.target.value != "" ? e : "");
+                setSelectedSubCategory(e.target.value != "" ? e.target.value?.split(",")[1] : "");
               }}
             >
               <option value="">Select a Sub-Category</option>
               {subCatOptions?.map((subCat, i) => (
-                <option key={i} value={subCat.sub_cat_slug}>
+                <option key={i} value={subCat.sub_cat_slug+","+subCat._id}>
                   {subCat.title}
                 </option>
               ))}
