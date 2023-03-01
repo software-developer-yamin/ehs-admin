@@ -4,6 +4,7 @@
     min-height:90vh;
     background-color: #13375B;
     position:fixed;
+    overflow: auto;
 }
 
 .add__product__button{
