@@ -10,6 +10,7 @@ const SpreadSheet = () => {
   const [f, setF] = useState(false);
   const [u, setU] = useState(false);
   const [l, setL] = useState(false);
+  const [replace, setReplace] = useState(false);
 
   const createRequests = () => {
     console.log(data);
@@ -28,14 +29,14 @@ const SpreadSheet = () => {
       let insertObj = {};
       insertObj.name = data[i][1];
       let a = data[i][12];
-      let b = a?.split(":");
+      let b = a.split(":");
       // ===============M====================
       // console.log(b)
       let material = [];
-      for (let i = 0; i < b?.length; i++) {
-        if (b[i]?.includes("_")) {
+      for (let i = 0; i < b.length; i++) {
+        if (b[i].includes("_")) {
           // console.log(b[i])
-          material.push(b[i]?.split(", ")[0]);
+          material.push(b[i].split(", ")[0]);
           // console.log(material)
         }
       }
@@ -43,27 +44,26 @@ const SpreadSheet = () => {
       // console.log(material)
       let matId = [];
       // console.log(material)
-      for (let m = 0; m < material?.length; m++) {
+      for (let m = 0; m < material.length; m++) {
         // get Materoal
         let response = await fetch(
           `${API}/material/getSingleMaterial?material_title=${
-            material[m]?.split("_ ")[0]
-          }&dimension_title=${material[m]?.split("_ ")[1]}`,
+            material[m].split("_ ")[0]
+          }&dimension_title=${material[m].split("_ ")[1]}`,
           {
             method: "GET",
-
             headers: {
               "Content-Type": "application/json",
             },
           }
         );
         response = await response.json();
-        // console.log(response)
 
         if (response.status === 200) {
-          if (response.data?.length > 0) {
-            if (!matId.includes(response.data[0]._id))
+          if (response.data.length > 0) {
+            if (!matId.includes(response.data[0]._id)) {
               matId.push(response.data[0]._id);
+            }
           }
         }
       }
@@ -74,9 +74,9 @@ const SpreadSheet = () => {
       // =====================M==============
 
       // ==================C=========================
-      let category = data[i][2]?.split(", ");
+      let category = data[i][2].split(", ");
       let catId = [];
-      for (let c = 0; c < category?.length; c++) {
+      for (let c = 0; c < category.length; c++) {
         // get cat
         let response = await fetch(
           `${API}/category/getSingleCategory?title=${category[c]}`,
@@ -104,11 +104,10 @@ const SpreadSheet = () => {
       // ==================C=========================
 
       // =================sbc=================================
-      let subCategory = data[i][3]?.split(", ");
+      let subCategory = data[i][3].split(", ");
       // console.log(subCategory)
       let sbcatId = [];
-      for (let sb = 0; sb < subCategory?.length; sb++) {
-        console.log(subCategory[sb]);
+      for (let sb = 0; sb < subCategory.length; sb++) {
 
         // get Materoal
         let response = await fetch(
@@ -162,19 +161,19 @@ const SpreadSheet = () => {
       // =================tag=====================
       let tags = [];
       if (data[i][11] != undefined) {
-        tags = data[i][11]?.split(", ");
+        tags = data[i][11].split(", ");
       }
       insertObj.tags = tags;
       // =================tag=====================
       let img = [];
       if (data[i][15] != undefined) {
-        img = data[i][15]?.split(", ");
+        img = data[i][15].split(", ");
       }
 
       insertObj.imgUrl = img;
 
       // +++++++++++++++++++++++++Author================
-      let Author = data[i][4]?.split(", ");
+      let Author = data[i][4].split(", ");
       // console.log(subCategory)
       let authId = [];
       for (let au = 0; au < Author?.length; au++) {
@@ -209,7 +208,7 @@ const SpreadSheet = () => {
       finalData.push(insertObj);
       let oneDrive = [];
       for (let o = 16; o <= 32; o++) {
-        console.log(o);
+        //console.log(o);
         if (data[i][o] != undefined) {
           oneDrive.push(data[i][o]);
         } else {
@@ -247,9 +246,9 @@ const SpreadSheet = () => {
 
       insertObj.MOQ = moq;
 
-      console.log("insertObj.MOQ moq :>> ", moq, data[i]);
-
       insertObj.thumbnailUrl = data[i][39];
+
+      insertObj.replace = replace;
 
       // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       if (u) {
@@ -261,7 +260,7 @@ const SpreadSheet = () => {
           },
         });
         const dat = await res.json();
-        console.log(dat, "updwishhhhhh");
+        console.log(dat, "result");
         // console.log("ivvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvnside")
       }
       // ===================================================================================
@@ -304,6 +303,14 @@ const SpreadSheet = () => {
         </button>
         <button className="b" onClick={processData}>
           Upload and check
+        </button>
+        <button
+          className="b"
+          onClick={() => {
+            setReplace(!replace);
+          }}
+        >
+          Replace flag - {replace ? "On" : "Off"}
         </button>
       </div>
       <div>
