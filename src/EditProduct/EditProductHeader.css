@@ -16,6 +16,8 @@
     padding-left:25px;
     color: #13375B;
     font-family: 'Source Sans Pro', sans-serif;
+    display: flex;
+    align-items: center;
   }
   
   .edit__product__header__box {
