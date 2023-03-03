@@ -105,13 +105,11 @@ const SpreadSheet = () => {
 
       // =================sbc=================================
       let subCategory = data[i][3].split(", ");
-      // console.log(subCategory)
       let sbcatId = [];
       for (let sb = 0; sb < subCategory.length; sb++) {
-
         // get Materoal
         let response = await fetch(
-          `${API}/subCategory/getSingleSubCategory?title=${subCategory[sb]}`,
+          `${API}/subCategory/getSingleSubCategory?sub_cat_slug=${subCategory[sb].toLowerCase()}`,
           {
             method: "GET",
 
@@ -121,7 +119,6 @@ const SpreadSheet = () => {
           }
         );
         response = await response.json();
-        // console.log(response)
         if (response.status === 200) {
           if (response.data.length > 0) {
             sbcatId.push(response.data[0]._id);
